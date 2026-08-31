@@ -1,1 +1,2 @@
 - [Nested package isolation](nested-package-isolation.md) — verify package installs do not modify the root manifest when adding a separate service.
+- [Resend testing sender](resend-testing-sender.md) — onboarding@resend.dev only delivers to the connected Resend account email until a domain is verified.
