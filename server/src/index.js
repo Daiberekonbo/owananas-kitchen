@@ -1,4 +1,5 @@
 import 'dotenv/config';
+import process from 'node:process';
 import app from './app.js';
 import { config } from './config.js';
 import { pool } from './db.js';

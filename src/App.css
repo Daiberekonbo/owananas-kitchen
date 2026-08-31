@@ -280,6 +280,22 @@ body {
   margin: 0 auto;
   justify-content: center;
 }
+
+.catalog-status {
+  max-width: 650px;
+  margin: 30px auto 0;
+  padding: 18px 24px;
+  border-radius: 10px;
+  background: white;
+  color: #666;
+  text-align: center;
+}
+
+.catalog-error {
+  color: var(--primary-color-dark);
+  border: 1px solid #f0c5af;
+}
+
 .packages {
   padding: 80px 8%;
   background: white;

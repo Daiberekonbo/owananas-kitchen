@@ -1,3 +1,5 @@
+import process from 'node:process';
+
 const required = (name, value) => {
   if (!value) {
     throw new Error(`${name} is required. Copy server/.env.example to server/.env and configure it.`);

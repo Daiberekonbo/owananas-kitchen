@@ -1,12 +1,9 @@
 import { useState } from "react"
 import FoodCard from "./FoodCard"
-import { foods } from "../data/food"
 
-function MenuSection({ onAddToCart }) {
+function MenuSection({ foods, loading, error, onAddToCart }) {
   const [selectedCategory, setSelectedCategory] = useState("All")
   const [searchTerm, setSearchTerm] = useState("")
-
-  
 
   const categories = [
     "All",
@@ -36,45 +33,53 @@ function MenuSection({ onAddToCart }) {
         </span>
       </div>
 
-      <div className="menu-search">
-        <input
-          type="text"
-          placeholder="Search food... e.g. chicken"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-      </div>
-
-      <div className="category-buttons">
-        {categories.map((category) => (
-          <button
-            key={category}
-            onClick={() => setSelectedCategory(category)}
-            className={category === selectedCategory ? "active" : ""}
-          >
-            {category}
-          </button>
-        ))}
-      </div>
-
-      {filteredFoods.length === 0 ? (
-        <p className="no-results">
-          No food matches "{searchTerm}" in {selectedCategory}.
-        </p>
+      {loading ? (
+        <p className="catalog-status" role="status">Loading our menu...</p>
+      ) : error ? (
+        <p className="catalog-status catalog-error" role="alert">{error}</p>
       ) : (
-        <div className="food-grid">
-          {filteredFoods.map((food) => (
-            <FoodCard
-              key={food.id}
-              id={food.id}
-              name={food.name}
-              price={food.price}
-              description={food.description}
-              image={food.image}
-              onAddToCart={onAddToCart}
+        <>
+          <div className="menu-search">
+            <input
+              type="text"
+              placeholder="Search food... e.g. chicken"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
-          ))}
-        </div>
+          </div>
+
+          <div className="category-buttons">
+            {categories.map((category) => (
+              <button
+                key={category}
+                onClick={() => setSelectedCategory(category)}
+                className={category === selectedCategory ? "active" : ""}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+
+          {filteredFoods.length === 0 ? (
+            <p className="no-results">
+              No food matches "{searchTerm}" in {selectedCategory}.
+            </p>
+          ) : (
+            <div className="food-grid">
+              {filteredFoods.map((food) => (
+                <FoodCard
+                  key={food.id}
+                  id={food.id}
+                  name={food.name}
+                  price={food.price}
+                  description={food.description}
+                  image={food.image}
+                  onAddToCart={onAddToCart}
+                />
+              ))}
+            </div>
+          )}
+        </>
       )}
     </section>
   )

@@ -106,6 +106,12 @@
   cursor: pointer;
 }
 
+.form-error {
+  margin: 12px 0 0;
+  color: #b73f03;
+  text-align: center;
+}
+
 .checkout-submit:disabled {
   background: #ccc;
   cursor: not-allowed;

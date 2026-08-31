@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
@@ -13,11 +13,36 @@ import Contact from './components/Contact'
 import Footer from './components/Footer'
 import Cart from './components/Cart'
 import Checkout from './components/Checkout'
+import { getFoods, getPackages } from './services/api'
 
 function App() {
   const [cartItems, setCartItems] = useState([])
   const [cartOpen, setCartOpen] = useState(false)
   const [checkoutOpen, setCheckoutOpen] = useState(false)
+  const [catalog, setCatalog] = useState({ foods: [], packages: [] })
+  const [catalogLoading, setCatalogLoading] = useState(true)
+  const [catalogError, setCatalogError] = useState('')
+
+  useEffect(() => {
+    let isMounted = true
+
+    Promise.all([getFoods(), getPackages()])
+      .then(([foods, packages]) => {
+        if (!isMounted) return
+        setCatalog({ foods, packages })
+      })
+      .catch((error) => {
+        if (!isMounted) return
+        setCatalogError(error.message || 'We could not load the menu right now.')
+      })
+      .finally(() => {
+        if (isMounted) setCatalogLoading(false)
+      })
+
+    return () => {
+      isMounted = false
+    }
+  }, [])
 
   const addToCart = (item) => {
     setCartItems((prevItems) => {
@@ -63,9 +88,19 @@ function App() {
 
       <Services />
 
-      <MenuSection onAddToCart={addToCart} />
+      <MenuSection
+        foods={catalog.foods}
+        loading={catalogLoading}
+        error={catalogError}
+        onAddToCart={addToCart}
+      />
 
-            <FoodPackages onAddToCart={addToCart} />
+      <FoodPackages
+        packages={catalog.packages}
+        loading={catalogLoading}
+        error={catalogError}
+        onAddToCart={addToCart}
+      />
 
       <Catering />
 

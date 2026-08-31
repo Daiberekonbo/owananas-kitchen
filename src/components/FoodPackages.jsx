@@ -1,8 +1,6 @@
 import { scrollToSection } from "../utils/scrollTo"
-import { packages } from "../data/package"
 
-function FoodPackages({ onAddToCart }) {
-  
+function FoodPackages({ packages, loading, error, onAddToCart }) {
 
   return (
     <section className="packages" id="packages">
@@ -17,28 +15,34 @@ function FoodPackages({ onAddToCart }) {
         </span>
       </div>
 
-      <div className="packages-grid">
-        {packages.map((foodPackage) => (
-          <div className="package-card" key={foodPackage.id}>
-            <h3>{foodPackage.name}</h3>
+      {loading ? (
+        <p className="catalog-status" role="status">Loading our packages...</p>
+      ) : error ? (
+        <p className="catalog-status catalog-error" role="alert">{error}</p>
+      ) : (
+        <div className="packages-grid">
+          {packages.map((foodPackage) => (
+            <div className="package-card" key={foodPackage.id}>
+              <h3>{foodPackage.name}</h3>
 
-            <p>{foodPackage.description}</p>
+              <p>{foodPackage.description}</p>
 
-            <strong>From ₦{foodPackage.price.toLocaleString()}</strong>
+              <strong>From ₦{foodPackage.price.toLocaleString()}</strong>
 
-            <button onClick={() => onAddToCart(foodPackage)}>
-              Add to Cart
-            </button>
+              <button onClick={() => onAddToCart(foodPackage)}>
+                Add to Cart
+              </button>
 
-            <button
-              className="package-secondary"
-              onClick={() => scrollToSection("contact")}
-            >
-              Custom Request
-            </button>
-          </div>
-        ))}
-      </div>
+              <button
+                className="package-secondary"
+                onClick={() => scrollToSection("contact")}
+              >
+                Custom Request
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
     </section>
   )
 }

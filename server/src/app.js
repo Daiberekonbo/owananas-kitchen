@@ -29,7 +29,8 @@ app.use((_req, res) => {
   res.status(404).json({ error: 'Route not found.' });
 });
 
-app.use((error, _req, res, _next) => {
+app.use((error, _req, res, next) => {
+  void next;
   if (error instanceof ZodError) {
     return res.status(400).json({
       error: 'Request validation failed.',

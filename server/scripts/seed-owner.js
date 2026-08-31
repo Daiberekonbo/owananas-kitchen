@@ -1,5 +1,6 @@
 import 'dotenv/config';
 import readline from 'node:readline/promises';
+import process from 'node:process';
 import { stdin as input, stdout as output } from 'node:process';
 import { hashPassword } from '../src/auth.js';
 import { pool } from '../src/db.js';

@@ -1,5 +1,6 @@
 import { useState } from "react"
 import "./Checkout.css"
+import { submitOrder } from "../services/api"
 
 function Checkout({ isOpen, onClose, items, onPlaceOrder }) {
   const [form, setForm] = useState({
@@ -11,6 +12,8 @@ function Checkout({ isOpen, onClose, items, onPlaceOrder }) {
   })
   const [errors, setErrors] = useState({})
   const [orderRef, setOrderRef] = useState(null)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState("")
 
   if (!isOpen) return null
 
@@ -36,20 +39,45 @@ function Checkout({ isOpen, onClose, items, onPlaceOrder }) {
     return Object.keys(newErrors).length === 0
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     if (items.length === 0) return
     if (!validate()) return
 
-    const ref = "OWK-" + Math.floor(100000 + Math.random() * 900000)
-    setOrderRef(ref)
-    onPlaceOrder()
+    setIsSubmitting(true)
+    setSubmitError("")
+
+    try {
+      const response = await submitOrder({
+        customer: form,
+        items: items.map(({ id, name, price, quantity }) => ({
+          id,
+          name,
+          price,
+          quantity
+        })),
+        total
+      })
+
+      if (!response?.orderRef) {
+        throw new Error("The order was received without a confirmation reference.")
+      }
+
+      setOrderRef(response.orderRef)
+      onPlaceOrder()
+    } catch (error) {
+      setSubmitError(error.message || "We could not place your order. Please try again.")
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const handleClose = () => {
     setOrderRef(null)
     setForm({ name: "", phone: "", email: "", address: "", notes: "" })
     setErrors({})
+    setSubmitError("")
+    setIsSubmitting(false)
     onClose()
   }
 
@@ -129,10 +157,11 @@ function Checkout({ isOpen, onClose, items, onPlaceOrder }) {
               <button
                 type="submit"
                 className="checkout-submit"
-                disabled={items.length === 0}
+                disabled={items.length === 0 || isSubmitting}
               >
-                Place Order
+                {isSubmitting ? "Sending Order..." : "Place Order"}
               </button>
+              {submitError && <p className="form-error" role="alert">{submitError}</p>}
             </form>
           </>
         )}
