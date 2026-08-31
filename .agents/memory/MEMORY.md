@@ -1,0 +1,1 @@
+- [Nested package isolation](nested-package-isolation.md) — verify package installs do not modify the root manifest when adding a separate service.
