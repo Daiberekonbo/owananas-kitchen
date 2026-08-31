@@ -103,14 +103,15 @@ router.post('/orders', async (req, res, next) => {
       for (let attempt = 0; attempt < 5; attempt += 1) {
         const result = await client.query(
           `INSERT INTO orders
-            (order_ref, customer_name, customer_phone, customer_email, customer_address, customer_notes, total)
-           VALUES ($1, $2, $3, $4, $5, $6, $7)
+            (order_ref, customer_name, customer_phone, customer_whatsapp, customer_email, customer_address, customer_notes, total)
+           VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
            ON CONFLICT (order_ref) DO NOTHING
            RETURNING id, order_ref, created_at, total`,
           [
             orderReference(),
             input.customer.name,
             input.customer.phone,
+            input.customer.whatsapp,
             input.customer.email,
             input.customer.address,
             input.customer.notes || null,

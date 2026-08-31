@@ -56,7 +56,7 @@ router.get('/orders', async (_req, res, next) => {
   try {
     const ordersResult = await query(
       `SELECT id, order_ref, customer_name, customer_phone, customer_email,
-              customer_address, customer_notes, total, created_at
+              customer_whatsapp, customer_address, customer_notes, total, created_at
        FROM orders ORDER BY created_at DESC`
     );
     const itemsResult = await query(
@@ -82,6 +82,7 @@ router.get('/orders', async (_req, res, next) => {
       customer: {
         name: order.customer_name,
         phone: order.customer_phone,
+        whatsapp: order.customer_whatsapp,
         email: order.customer_email,
         address: order.customer_address,
         notes: order.customer_notes || ''

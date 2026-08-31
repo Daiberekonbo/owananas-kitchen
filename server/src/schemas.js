@@ -55,6 +55,7 @@ export const orderSchema = z.object({
   customer: z.object({
     name: z.string().trim().min(1).max(200),
     phone: z.string().trim().min(3).max(50),
+    whatsapp: z.string().trim().min(3).max(50),
     email: z.string().trim().email().max(320),
     address: z.string().trim().min(5).max(1000),
     notes: z.string().trim().max(2000).optional().default('')

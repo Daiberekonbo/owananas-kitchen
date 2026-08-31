@@ -32,12 +32,19 @@ CREATE TABLE IF NOT EXISTS orders (
   order_ref TEXT NOT NULL UNIQUE,
   customer_name TEXT NOT NULL,
   customer_phone TEXT NOT NULL,
+  customer_whatsapp TEXT NOT NULL,
   customer_email TEXT NOT NULL,
   customer_address TEXT NOT NULL,
   customer_notes TEXT,
   total INTEGER NOT NULL CHECK (total >= 0),
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
+
+ALTER TABLE orders
+  ADD COLUMN IF NOT EXISTS customer_whatsapp TEXT NOT NULL DEFAULT '';
+
+ALTER TABLE orders
+  ALTER COLUMN customer_whatsapp DROP DEFAULT;
 
 CREATE TABLE IF NOT EXISTS order_items (
   id SERIAL PRIMARY KEY,
