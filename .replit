@@ -59,3 +59,8 @@ externalPort = 5000
 [userenv.shared]
 OWNER_EMAIL = "daiberekonbodawariboko@gmail.com"
 RESEND_FROM_EMAIL = "<anything>@wileobsali.resend.app"
+
+[deployment]
+deploymentTarget = "autoscale"
+run = ["node", "server/src/index.js"]
+build = ["npm", "install", "--prefix", "server", "--omit=dev"]
