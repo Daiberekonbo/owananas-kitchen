@@ -1212,3 +1212,13 @@ body {
   color: var(--primary-color) !important;
   border: 2px solid var(--primary-color);
 }
+.contact-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.whatsapp-button {
+  background: #25D366 !important;
+}
