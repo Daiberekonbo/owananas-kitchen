@@ -6,6 +6,7 @@ function Checkout({ isOpen, onClose, items, onPlaceOrder }) {
   const [form, setForm] = useState({
     name: "",
     phone: "",
+    whatsapp: "",
     email: "",
     address: "",
     notes: ""
@@ -28,6 +29,7 @@ function Checkout({ isOpen, onClose, items, onPlaceOrder }) {
 
     if (!form.name.trim()) newErrors.name = "Name is required"
     if (!form.phone.trim()) newErrors.phone = "Phone number is required"
+    if (!form.whatsapp.trim()) newErrors.whatsapp = "WhatsApp number is required"
     if (!form.email.trim()) {
       newErrors.email = "Email is required"
     } else if (!/^\S+@\S+\.\S+$/.test(form.email)) {
@@ -74,7 +76,7 @@ function Checkout({ isOpen, onClose, items, onPlaceOrder }) {
 
   const handleClose = () => {
     setOrderRef(null)
-    setForm({ name: "", phone: "", email: "", address: "", notes: "" })
+    setForm({ name: "", phone: "", whatsapp: "", email: "", address: "", notes: "" })
     setErrors({})
     setSubmitError("")
     setIsSubmitting(false)
@@ -132,9 +134,15 @@ function Checkout({ isOpen, onClose, items, onPlaceOrder }) {
               </label>
 
               <label>
-                Phone Number
+                Phone Number (for calls)
                 <input name="phone" value={form.phone} onChange={handleChange} />
                 {errors.phone && <span className="field-error">{errors.phone}</span>}
+              </label>
+
+              <label>
+                WhatsApp Number
+                <input name="whatsapp" value={form.whatsapp} onChange={handleChange} />
+                {errors.whatsapp && <span className="field-error">{errors.whatsapp}</span>}
               </label>
 
               <label>

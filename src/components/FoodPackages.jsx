@@ -1,6 +1,14 @@
-import { scrollToSection } from "../utils/scrollTo"
+
 
 function FoodPackages({ packages, loading, error, onAddToCart }) {
+  const whatsappNumber = "2348033171523"
+
+  const handleCustomRequest = (packageName) => {
+    const message = encodeURIComponent(
+      `Hi, I'd like to make a custom request based on the ${packageName}.`
+    )
+    window.open(`https://wa.me/${whatsappNumber}?text=${message}`, "_blank")
+  }
 
   return (
     <section className="packages" id="packages">
@@ -35,7 +43,7 @@ function FoodPackages({ packages, loading, error, onAddToCart }) {
 
               <button
                 className="package-secondary"
-                onClick={() => scrollToSection("contact")}
+                onClick={() => handleCustomRequest(foodPackage.name)}
               >
                 Custom Request
               </button>

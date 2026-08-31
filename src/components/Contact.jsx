@@ -1,4 +1,9 @@
 function Contact() {
+  const whatsappNumber = "2348033171523"
+  const whatsappMessage = encodeURIComponent(
+    "Hi Owanana's Kitchen, I'd like to place a custom order/inquiry."
+  )
+
   return (
     <section className="contact" id="contact">
       <div className="contact-content">
@@ -29,12 +34,26 @@ function Contact() {
           </div>
         </div>
 
-                <button
-          className="contact-button"
-          onClick={() => window.location.href = "mailto:hello@owananaskitchen.com"}
-        >
-          Contact Us
-        </button>
+        <div className="contact-buttons">
+          <button
+            className="contact-button whatsapp-button"
+            onClick={() =>
+              window.open(
+                `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`,
+                "_blank"
+              )
+            }
+          >
+            Chat on WhatsApp
+          </button>
+
+          <button
+            className="contact-button"
+            onClick={() => (window.location.href = "mailto:hello@owananaskitchen.com")}
+          >
+            Contact Us
+          </button>
+        </div>
       </div>
     </section>
   )
