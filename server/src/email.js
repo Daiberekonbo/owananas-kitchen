@@ -31,6 +31,7 @@ export async function sendOrderNotification(order) {
       `New order: ${order.orderRef}`,
       `Customer: ${order.customer.name}`,
       `Phone: ${order.customer.phone}`,
+      `WhatsApp: ${order.customer.whatsapp}`,
       `Email: ${order.customer.email}`,
       `Address: ${order.customer.address}`,
       '',
@@ -43,6 +44,7 @@ export async function sendOrderNotification(order) {
       <h2>New order: ${escapeHtml(order.orderRef)}</h2>
       <p><strong>Customer:</strong> ${escapeHtml(order.customer.name)}<br>
       <strong>Phone:</strong> ${escapeHtml(order.customer.phone)}<br>
+      <strong>WhatsApp:</strong> ${escapeHtml(order.customer.whatsapp)}<br>
       <strong>Email:</strong> ${escapeHtml(order.customer.email)}<br>
       <strong>Address:</strong> ${escapeHtml(order.customer.address)}</p>
       <h3>Items</h3>
